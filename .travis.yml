@@ -76,7 +76,7 @@ script:
   - sed -i -e "/magma.secure.memory.length/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.library.file/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.spool/d" sandbox/etc/magma.sandbox.config
-  - printf "magma.library.file = $TRAVIS_BUILD_DIR/magmad.so\n >> sandbox/etc/magma.sandbox.config
+  - printf "magma.library.file = $TRAVIS_BUILD_DIR/magmad.so\n" >> sandbox/etc/magma.sandbox.config
   - printf "magma.iface.database.host = 127.0.0.1\n" >> sandbox/etc/magma.sandbox.config
   - printf "magma.system.domain = travis.local\n" >> sandbox/etc/magma.sandbox.config
   - printf "magma.secure.memory.enable = false\n" >> sandbox/etc/magma.sandbox.config
