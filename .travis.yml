@@ -1,0 +1,93 @@
+os: linux
+language: c++
+dist: trusty
+group: stable
+compiler: gcc
+notifications:
+  email:
+    on_success: never
+    on_failure: never
+services: 
+  - mysql
+  - postfix
+  - memcached
+addons:
+  apt:
+    packages:
+    - autoconf 
+    - automake 
+    - bison
+    - build-essential
+    - cmake
+    - curl
+    - flex
+    - g++
+    - gcc
+    - gcc-multilib
+    - gdb
+    - git
+    - git-man
+    - gnupg
+    - ibc++-dev
+    - inotify-tools
+    - libarchive13
+    - libbsd-dev
+    - libc6-dev
+    - libmpfr4 
+    - libmpfr-dev
+    - libncurses5-dev 
+    - libpython2.7
+    - libsubunit0
+    - libsubunit-dev
+    - libsubunit-dev
+    - libtool
+    - lsof
+    - make 
+    - mlocate
+    - patch
+    - pciutils
+    - pkg-config
+    - postfix
+    - rsync
+    - rsync
+    - sysstat
+    - sysstat
+    - usbutils
+    - valgrind 
+    - valgrind-dbg
+    - wget
+before_script:
+  - export HOSTNAME=`hostname`
+  - mysql -e "CREATE DATABASE Sandbox;"
+  - mysql -e "CREATE USER 'mytool'@'localhost' IDENTIFIED BY 'aComplex1';"
+  - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'mytool'@'localhost' WITH GRANT OPTION;"
+script: 
+  - export HOSTNAME=`hostname`
+  - git remote add upstream https://github.com/lavabit/magma.git
+  - git fetch upstream
+  - git reset --hard upstream/develop
+  - git checkout origin/develop -- .travis.yml
+  - dev/scripts/database/schema.reset.sh
+  - dev/scripts/builders/build.lib.sh extract
+  - dev/scripts/builders/build.lib.sh prep
+  - (dev/scripts/builders/build.lib.sh follow | grep -E "^making") & TAIL_PID=$! ; disown
+  - (for ((i = 0; i < 60; ++i)); do date ; sleep 60; done) & LOOP_PID=$! ; disown
+  - dev/scripts/builders/build.lib.sh build
+  - dev/scripts/builders/build.lib.sh combine
+  - killall tail && kill $LOOP_PID
+  - sed -i -e "/magma.iface.database.socket_path/d" sandbox/etc/magma.sandbox.config
+  - sed -i -e "/magma.iface.database.host/d" sandbox/etc/magma.sandbox.config
+  - sed -i -e "/magma.secure.memory.length/d" sandbox/etc/magma.sandbox.config
+  - sed -i -e "/magma.library.file/d" sandbox/etc/magma.sandbox.config
+  - sed -i -e "/magma.spool/d" sandbox/etc/magma.sandbox.config
+  - printf "magma.library.file = $TRAVIS_BUILD_DIR/magmad.so\n >> sandbox/etc/magma.sandbox.config
+  - printf "magma.iface.database.host = 127.0.0.1\n" >> sandbox/etc/magma.sandbox.config
+  - printf "magma.system.domain = travis.local\n" >> sandbox/etc/magma.sandbox.config
+  - printf "magma.secure.memory.enable = false\n" >> sandbox/etc/magma.sandbox.config
+  - printf "magma.secure.memory.length = 16384\n" >> sandbox/etc/magma.sandbox.config
+  - printf "magma.spool = /tmp/\n" >> sandbox/etc/magma.sandbox.config
+  - chmod 700 sandbox/etc/tls.localhost.localdomain.pem
+  - chmod 700 sandbox/etc/dkim.localhost.localdomain.pem
+  - chmod 700 sandbox/etc/dime.localhost.localdomain.key
+  - chmod 700 sandbox/etc/dime.localhost.localdomain.signet
+  - make all && make check
