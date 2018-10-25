@@ -74,6 +74,7 @@ script:
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
   - dev/scripts/builders/build.lib.sh build
+  - (dev/scripts/freshen/freshen.clamav.sh &> /dev/null) &
   - dev/scripts/builders/build.lib.sh combine
   - dev/scripts/builders/build.lib.sh load
   - dev/scripts/database/schema.reset.sh
@@ -93,5 +94,5 @@ script:
   - chmod 700 sandbox/etc/dkim.localhost.localdomain.pem
   - chmod 700 sandbox/etc/dime.localhost.localdomain.key
   - chmod 700 sandbox/etc/dime.localhost.localdomain.signet
-  - make all && make check
-  - # dev/scripts/launch/check.run.sh
+  - make all && make check && exit 0
+  - dev/scripts/launch/check.run.sh
