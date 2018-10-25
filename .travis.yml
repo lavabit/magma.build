@@ -39,7 +39,6 @@ addons:
     - libpython2.7
     - libsubunit0
     - libsubunit-dev
-    - libsubunit-dev
     - libtool
     - lsof
     - make 
@@ -49,8 +48,6 @@ addons:
     - pkg-config
     - postfix
     - rsync
-    - rsync
-    - sysstat
     - sysstat
     - usbutils
     - valgrind 
