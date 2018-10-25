@@ -70,7 +70,7 @@ script:
   - dev/scripts/database/schema.reset.sh
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
-  - (for ((i = 0; i < 60; ++i)); do date ; sleep 60; done) & LOOP_PID=$! ; disown
+  - (for ((i = 0; i < 60; ++i)); do sleep 60 ; date ; done) & LOOP_PID=$! ; disown
   - dev/scripts/builders/build.lib.sh build
   - dev/scripts/builders/build.lib.sh combine
   - kill $LOOP_PID
