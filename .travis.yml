@@ -7,15 +7,15 @@ notifications:
   email:
     on_success: never
     on_failure: never
-services: 
+services:
   - mysql
   - postfix
   - memcached
 addons:
   apt:
     packages:
-    - autoconf 
-    - automake 
+    - autoconf
+    - automake
     - bison
     - build-essential
     - cmake
@@ -33,15 +33,15 @@ addons:
     - libarchive13
     - libbsd-dev
     - libc6-dev
-    - libmpfr4 
+    - libmpfr4
     - libmpfr-dev
-    - libncurses5-dev 
+    - libncurses5-dev
     - libpython2.7
     - libsubunit0
     - libsubunit-dev
     - libtool
     - lsof
-    - make 
+    - make
     - mlocate
     - patch
     - pciutils
@@ -50,7 +50,7 @@ addons:
     - rsync
     - sysstat
     - usbutils
-    - valgrind 
+    - valgrind
     - valgrind-dbg
     - wget
 before_script:
@@ -58,18 +58,25 @@ before_script:
   - mysql -e "CREATE DATABASE Sandbox;"
   - mysql -e "CREATE USER 'mytool'@'localhost' IDENTIFIED BY 'aComplex1';"
   - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'mytool'@'localhost' WITH GRANT OPTION;"
-script: 
+  - cd $HOME && curl --location --output util-linux-2.25.2.tar.gz https://www.kernel.org/pub/linux/utils/util-linux/v2.25/util-linux-2.25.2.tar.gz
+  - tar xzvf util-linux-2.25.2.tar.gz && cd util-linux-2.25.2
+  - ./configure ADJTIME_PATH=/var/lib/hwclock/adjtime --disable-chfn-chsh --disable-login --disable-nologin --disable-su --disable-setpriv --disable-runuser --disable-pylibmount --disable-static --without-python --without-systemd --without-systemdsystemunitdir --without-ncurses
+  - make prlimit && install --verbose --directory $HOME/bin/ && install --verbose --mode=755 prlimit $HOME/bin/prlimit && cd $TRAVIS_BUILD_DIR
+script:
   - export HOSTNAME=`hostname`
   - git remote add upstream https://github.com/lavabit/magma.git
   - git fetch upstream
   - git reset --hard upstream/develop
   - git checkout origin/master -- .travis.yml
-  - dev/scripts/database/schema.reset.sh
+  - #sudo -E $HOME/bin/prlimit --pid "$$" --stack=unlimited:unlimited;
+  - #sudo -E $HOME/bin/prlimit --pid "$$" --memlock=unlimited:unlimited;
+  - (for ((i = 0; i < 60; ++i)); do sleep 60 ; date ; done) & LOOP_PID=$! ; disown
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
-  - (for ((i = 0; i < 60; ++i)); do sleep 60 ; date ; done) & LOOP_PID=$! ; disown
   - dev/scripts/builders/build.lib.sh build
   - dev/scripts/builders/build.lib.sh combine
+  - dev/scripts/builders/build.lib.sh load
+  - dev/scripts/database/schema.reset.sh
   - kill $LOOP_PID
   - sed -i -e "/magma.iface.database.socket_path/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.iface.database.host/d" sandbox/etc/magma.sandbox.config
@@ -86,5 +93,5 @@ script:
   - chmod 700 sandbox/etc/dkim.localhost.localdomain.pem
   - chmod 700 sandbox/etc/dime.localhost.localdomain.key
   - chmod 700 sandbox/etc/dime.localhost.localdomain.signet
-  - make all
-  - dev/scripts/launch/check.run.sh
+  - make all && make check
+  - # dev/scripts/launch/check.run.sh
