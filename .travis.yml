@@ -70,11 +70,10 @@ script:
   - dev/scripts/database/schema.reset.sh
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
-  - (dev/scripts/builders/build.lib.sh follow | grep -E "^making") & TAIL_PID=$! ; disown
   - (for ((i = 0; i < 60; ++i)); do date ; sleep 60; done) & LOOP_PID=$! ; disown
   - dev/scripts/builders/build.lib.sh build
   - dev/scripts/builders/build.lib.sh combine
-  - killall tail && kill $LOOP_PID
+  - kill $LOOP_PID
   - sed -i -e "/magma.iface.database.socket_path/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.iface.database.host/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.secure.memory.length/d" sandbox/etc/magma.sandbox.config
