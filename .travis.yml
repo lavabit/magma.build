@@ -93,5 +93,4 @@ script:
   - chmod 700 sandbox/etc/dkim.localhost.localdomain.pem
   - chmod 700 sandbox/etc/dime.localhost.localdomain.key
   - chmod 700 sandbox/etc/dime.localhost.localdomain.signet
-  - make --jobs=4 all
-  - make check
+  - make --jobs=4 all && dev/scripts/launch/check.run.sh
