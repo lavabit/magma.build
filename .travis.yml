@@ -64,7 +64,7 @@ before_script:
   - make prlimit && install --verbose --directory $HOME/bin/ && install --verbose --mode=755 prlimit $HOME/bin/prlimit && cd $TRAVIS_BUILD_DIR
 script:
   - export HOSTNAME=`hostname`
-  - HASH=`git show  --quiet | grep commit | awk -F' ' '{print $2}'`
+  - export HASH=`git show  --quiet | grep commit | awk -F' ' '{print $2}'`
   - git remote add upstream https://github.com/lavabit/magma.git
   - git fetch upstream
   - git reset --hard upstream/develop
