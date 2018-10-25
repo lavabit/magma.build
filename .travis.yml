@@ -3,6 +3,7 @@ language: c++
 dist: trusty
 group: stable
 compiler: gcc
+sudo: required
 notifications:
   email:
     on_success: never
@@ -69,8 +70,8 @@ script:
   - git fetch upstream
   - git reset --hard upstream/develop
   - git checkout $HASH -- .travis.yml
-  - #sudo -E $HOME/bin/prlimit --pid "$$" --stack=unlimited:unlimited;
-  - #sudo -E $HOME/bin/prlimit --pid "$$" --memlock=unlimited:unlimited;
+  - sudo -E $HOME/bin/prlimit --pid "$$" --stack=unlimited:unlimited;
+  - sudo -E $HOME/bin/prlimit --pid "$$" --memlock=unlimited:unlimited;
   - (for ((i = 0; i < 60; ++i)); do sleep 60 ; date ; done) & LOOP_PID=$! ; disown
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
@@ -82,18 +83,19 @@ script:
   - kill $LOOP_PID
   - sed -i -e "/magma.iface.database.socket_path/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.iface.database.host/d" sandbox/etc/magma.sandbox.config
-  - sed -i -e "/magma.secure.memory.length/d" sandbox/etc/magma.sandbox.config
+  - # sed -i -e "/magma.secure.memory.length/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.library.file/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.spool/d" sandbox/etc/magma.sandbox.config
   - printf "magma.library.file = $TRAVIS_BUILD_DIR/magmad.so\n" >> sandbox/etc/magma.sandbox.config
   - printf "magma.iface.database.host = 127.0.0.1\n" >> sandbox/etc/magma.sandbox.config
   - printf "magma.system.domain = travis.local\n" >> sandbox/etc/magma.sandbox.config
   - printf "magma.secure.memory.enable = true\n" >> sandbox/etc/magma.sandbox.config
-  - printf "magma.secure.memory.length = 65536\n" >> sandbox/etc/magma.sandbox.config
+  - # printf "magma.secure.memory.length = 65536\n" >> sandbox/etc/magma.sandbox.config
   - printf "magma.spool = /tmp/\n" >> sandbox/etc/magma.sandbox.config
   - chmod 700 sandbox/etc/tls.localhost.localdomain.pem
   - chmod 700 sandbox/etc/dkim.localhost.localdomain.pem
   - chmod 700 sandbox/etc/dime.localhost.localdomain.key
   - chmod 700 sandbox/etc/dime.localhost.localdomain.signet
-  - make --jobs=4 all && make check && exit 0
-  - dev/scripts/launch/check.run.sh
+  - make --jobs=4 all
+  - make check
+  - # dev/scripts/launch/check.run.sh
