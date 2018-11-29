@@ -39,6 +39,8 @@ env:
   - MATRIX_EVAL="TARGET='magmad magmad.check' COMPILER=clang FLAGS='-UMAGMA_PEDANTIC -O3'"
 addons:
   apt:
+    config:
+      retries: true
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-trusty-6.0
@@ -119,8 +121,6 @@ addons:
       - llvm-6.0-dev
 before_install:
   - eval "${MATRIX_EVAL}"
-  - sudo bash -c 'echo "Acquire::Retries \"5\";\n" > /etc/apt/apt.conf.d/10retry'
-  - sudo apt update
 before_script:
   - export HOSTNAME=`hostname`
   - mysql -e "CREATE DATABASE Sandbox;"
