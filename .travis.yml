@@ -13,15 +13,24 @@ services:
   - postfix
   - memcached
 env:
-  - TARGET="all" COMPILER="gcc" CC="gcc" CXX="g++"
+  - TARGET="all" COMPILER="gcc-4.8" CC="gcc-4.8" CXX="g++4.8"
+  - TARGET="all" COMPILER="gcc-4.9" CC="gcc-4.9" CXX="g++4.9"
+  - TARGET="all" COMPILER="gcc-5" CC="gcc-5" CXX="g++5"
+  - TARGET="all" COMPILER="gcc-6" CC="gcc-6" CXX="g++6"
   - TARGET="all" COMPILER="gcc-7" CC="gcc-7" CXX="g++-7"
   - TARGET="all" COMPILER="gcc-8" CC="gcc-8" CXX="g++-8"
-  - TARGET="all" COMPILER="gcc" FLAGS="-DMAGMA_PEDANTIC -O0"
-  - TARGET="all" COMPILER="gcc" FLAGS="-DMAGMA_PEDANTIC -O2"
-  - TARGET="all" COMPILER="gcc" FLAGS="-DMAGMA_PEDANTIC -O3"
-  - TARGET="all" COMPILER="gcc" FLAGS="-UMAGMA_PEDANTIC -O0"
-  - TARGET="all" COMPILER="gcc" FLAGS="-UMAGMA_PEDANTIC -O2"
-  - TARGET="all" COMPILER="gcc" FLAGS="-UMAGMA_PEDANTIC -O3"
+  - TARGET="all" COMPILER="gcc-4.8" FLAGS="-DMAGMA_PEDANTIC -O0"
+  - TARGET="all" COMPILER="gcc-4.8" FLAGS="-DMAGMA_PEDANTIC -O2"
+  - TARGET="all" COMPILER="gcc-4.8" FLAGS="-DMAGMA_PEDANTIC -O3"
+  - TARGET="all" COMPILER="gcc-4.8" FLAGS="-UMAGMA_PEDANTIC -O0"
+  - TARGET="all" COMPILER="gcc-4.8" FLAGS="-UMAGMA_PEDANTIC -O2"
+  - TARGET="all" COMPILER="gcc-4.8" FLAGS="-UMAGMA_PEDANTIC -O3"
+  - TARGET="all" COMPILER="gcc-8" FLAGS="-DMAGMA_PEDANTIC -O0"
+  - TARGET="all" COMPILER="gcc-8" FLAGS="-DMAGMA_PEDANTIC -O2"
+  - TARGET="all" COMPILER="gcc-8" FLAGS="-DMAGMA_PEDANTIC -O3"
+  - TARGET="all" COMPILER="gcc-8" FLAGS="-UMAGMA_PEDANTIC -O0"
+  - TARGET="all" COMPILER="gcc-8" FLAGS="-UMAGMA_PEDANTIC -O2"
+  - TARGET="all" COMPILER="gcc-8" FLAGS="-UMAGMA_PEDANTIC -O3"
   - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-DMAGMA_PEDANTIC -O0"
   - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-DMAGMA_PEDANTIC -O2"
   - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-DMAGMA_PEDANTIC -O3"
@@ -30,8 +39,6 @@ env:
   - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-UMAGMA_PEDANTIC -O3"
 addons:
   apt:
-    config:
-      retries: true
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-trusty-6.0
@@ -43,9 +50,6 @@ addons:
       - cmake
       - curl
       - flex
-      - g++
-      - gcc
-      - gcc-multilib
       - gdb
       - git
       - git-man
@@ -75,12 +79,47 @@ addons:
       - valgrind
       - valgrind-dbg
       - wget
+      - gcc-4.8
+      - g++-4.8
+      - gcc-4.8-locales
+      - gcc-4.8-multilib
+      - g++-4.8-multilib
+      - libstdc++-4.8-dev
+      - gcc-4.9
+      - g++-4.9
+      - gcc-4.9-locales
+      - gcc-4.9-multilib
+      - g++-4.9-multilib
+      - libstdc++-4.9-dev
+      - gcc-5
+      - g++-5
+      - gcc-5-locales
+      - gcc-5-multilib
+      - g++-5-multilib
+      - libstdc++-5-dev
+      - gcc-6
+      - g++-6
+      - gcc-6-locales
+      - gcc-6-multilib
+      - g++-6-multilib
+      - libstdc++-6-dev
       - gcc-7
       - g++-7
+      - gcc-7-locales
+      - gcc-7-multilib
+      - g++-7-multilib
+      - libstdc++-7-dev
       - gcc-8
       - g++-8
-      - clang-6.0
+      - gcc-8-locales
+      - gcc-8-multilib
+      - g++-8-multilib
       - libstdc++-8-dev
+      - clang-6.0
+      - llvm-6.0-dev
+before_install:
+  - sudo printf "Acquire::Retries \"5\";\n" > /etc/apt/apt.conf.d/retry
+  - sudo apt update
 before_script:
   - export HOSTNAME=`hostname`
   - mysql -e "CREATE DATABASE Sandbox;"
