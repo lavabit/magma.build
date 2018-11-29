@@ -12,48 +12,75 @@ services:
   - mysql
   - postfix
   - memcached
+env:
+  - TARGET="all" COMPILER="gcc" CC="gcc" CXX="g++"
+  - TARGET="all" COMPILER="gcc-7" CC="gcc-7" CXX="g++-7"
+  - TARGET="all" COMPILER="gcc-8" CC="gcc-8" CXX="g++-8"
+  - TARGET="all" COMPILER="gcc" FLAGS="-DMAGMA_PEDANTIC -O0"
+  - TARGET="all" COMPILER="gcc" FLAGS="-DMAGMA_PEDANTIC -O2"
+  - TARGET="all" COMPILER="gcc" FLAGS="-DMAGMA_PEDANTIC -O3"
+  - TARGET="all" COMPILER="gcc" FLAGS="-UMAGMA_PEDANTIC -O0"
+  - TARGET="all" COMPILER="gcc" FLAGS="-UMAGMA_PEDANTIC -O2"
+  - TARGET="all" COMPILER="gcc" FLAGS="-UMAGMA_PEDANTIC -O3"
+  - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-DMAGMA_PEDANTIC -O0"
+  - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-DMAGMA_PEDANTIC -O2"
+  - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-DMAGMA_PEDANTIC -O3"
+  - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-UMAGMA_PEDANTIC -O0"
+  - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-UMAGMA_PEDANTIC -O2"
+  - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-UMAGMA_PEDANTIC -O3"
 addons:
   apt:
+  config:
+      retries: true
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-trusty-6.0
     packages:
-    - autoconf
-    - automake
-    - bison
-    - build-essential
-    - cmake
-    - curl
-    - flex
-    - g++
-    - gcc
-    - gcc-multilib
-    - gdb
-    - git
-    - git-man
-    - gnupg
-    - ibc++-dev
-    - inotify-tools
-    - libarchive13
-    - libbsd-dev
-    - libc6-dev
-    - libmpfr4
-    - libmpfr-dev
-    - libncurses5-dev
-    - libpython2.7
-    - libsubunit0
-    - libsubunit-dev
-    - libtool
-    - lsof
-    - make
-    - mlocate
-    - patch
-    - pciutils
-    - pkg-config
-    - postfix
-    - rsync
-    - sysstat
-    - usbutils
-    - valgrind
-    - valgrind-dbg
-    - wget
+      - autoconf
+      - automake
+      - bison
+      - build-essential
+      - cmake
+      - curl
+      - flex
+      - g++
+      - gcc
+      - gcc-multilib
+      - gdb
+      - git
+      - git-man
+      - gnupg
+      - ibc++-dev
+      - inotify-tools
+      - libarchive13
+      - libbsd-dev
+      - libc6-dev
+      - libmpfr4
+      - libmpfr-dev
+      - libncurses5-dev
+      - libpython2.7
+      - libsubunit0
+      - libsubunit-dev
+      - libtool
+      - lsof
+      - make
+      - mlocate
+      - patch
+      - pciutils
+      - pkg-config
+      - postfix
+      - rsync
+      - sysstat
+      - usbutils
+      - valgrind
+      - valgrind-dbg
+      - wget
+      - gcc-7
+      - g++-7
+      - gcc-8
+      - g++-8
+      - clang-6.0
+      - libstdc++-8-dev
 before_script:
   - export HOSTNAME=`hostname`
   - mysql -e "CREATE DATABASE Sandbox;"
@@ -75,7 +102,7 @@ script:
   - (for ((i = 0; i < 60; ++i)); do sleep 60 ; date ; done) & LOOP_PID=$! ; disown
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
-  - dev/scripts/builders/build.lib.sh build
+  - M_CFLAGS="$FLAGS" M_CPPFLAGS="$FLAGS" M_CXXFLAGS="$FLAGS" dev/scripts/builders/build.lib.sh build
   - (dev/scripts/freshen/freshen.clamav.sh &> /dev/null) &
   - dev/scripts/builders/build.lib.sh combine
   - dev/scripts/builders/build.lib.sh load
@@ -93,4 +120,4 @@ script:
   - chmod 700 sandbox/etc/dkim.localhost.localdomain.pem
   - chmod 700 sandbox/etc/dime.localhost.localdomain.key
   - chmod 700 sandbox/etc/dime.localhost.localdomain.signet
-  - make --jobs=4 all && dev/scripts/launch/check.run.sh
+  - CC="$COMPILER" CFLAGS="$FLAGS" make --jobs=4 $TARGET && dev/scripts/launch/check.run.sh
