@@ -30,7 +30,7 @@ env:
   - TARGET="magmad magmad.check" COMPILER="clang" FLAGS="-UMAGMA_PEDANTIC -O3"
 addons:
   apt:
-  config:
+    config:
       retries: true
     sources:
       - ubuntu-toolchain-r-test
