@@ -119,7 +119,7 @@ addons:
       - llvm-6.0-dev
 before_install:
   - eval "${MATRIX_EVAL}"
-  - sudo printf "Acquire::Retries \"5\";\n" > /etc/apt/apt.conf.d/retry
+  - sudo bash -c 'echo "Acquire::Retries \"5\";\n" > /etc/apt/apt.conf.d/10retry'
   - sudo apt update
 before_script:
   - export HOSTNAME=`hostname`
