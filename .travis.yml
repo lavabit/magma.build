@@ -160,4 +160,4 @@ script:
   - chmod 700 sandbox/etc/dkim.localhost.localdomain.pem
   - chmod 700 sandbox/etc/dime.localhost.localdomain.key
   - chmod 700 sandbox/etc/dime.localhost.localdomain.signet
-  - CC="$COMPILER" CFLAGS="$FLAGS" make --jobs=4 $TARGET && dev/scripts/launch/check.run.sh
+  - CC="$COMPILER" CFLAGS="$FLAGS" make --keep-going --jobs=4 $TARGET && dev/scripts/launch/check.run.sh
