@@ -12,10 +12,10 @@ services:
   - postfix
   - memcached
 env:
-  - MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++4.8 TARGET=all"
-  - MATRIX_EVAL="COMPILER=gcc-4.9 CC=gcc-4.9 CXX=g++4.9 TARGET=all"
-  - MATRIX_EVAL="COMPILER=gcc-5 CC=gcc-5 CXX=g++5 TARGET=all"
-  - MATRIX_EVAL="COMPILER=gcc-6 CC=gcc-6 CXX=g++6 TARGET=all"
+  - MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 TARGET=all"
+  - MATRIX_EVAL="COMPILER=gcc-4.9 CC=gcc-4.9 CXX=g++-4.9 TARGET=all"
+  - MATRIX_EVAL="COMPILER=gcc-5 CC=gcc-5 CXX=g++-5 TARGET=all"
+  - MATRIX_EVAL="COMPILER=gcc-6 CC=gcc-6 CXX=g++-6 TARGET=all"
   - MATRIX_EVAL="COMPILER=gcc-7 CC=gcc-7 CXX=g++-7 TARGET=all"
   - MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 TARGET=all"
   - MATRIX_EVAL="COMPILER=gcc-4.8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=all"
