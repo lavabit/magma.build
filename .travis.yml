@@ -144,7 +144,7 @@ script:
   - M_CFLAGS="$FLAGS" M_CPPFLAGS="$FLAGS" M_CXXFLAGS="$FLAGS" dev/scripts/builders/build.lib.sh build
   - (dev/scripts/freshen/freshen.clamav.sh &> /dev/null) &
   - dev/scripts/builders/build.lib.sh combine
-  - if [ ! -f magmad.so ]; then dev/scripts/builders/build.lib.sh mysql-log | tail -100; exit 1; fi
+  - if [ ! -f magmad.so ]; then dev/scripts/builders/build.lib.sh mysql-log | tail -20; dev/scripts/builders/build.lib.sh jansson-log | tail -50; exit 1; fi
   - dev/scripts/builders/build.lib.sh load
   - dev/scripts/database/schema.reset.sh
   - kill $LOOP_PID
