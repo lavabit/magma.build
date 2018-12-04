@@ -102,10 +102,6 @@ matrix:
     - os: linux
       dist: trusty
       compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
       env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
     - os: linux
       dist: trusty
@@ -186,35 +182,35 @@ matrix:
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
 before_install:
   - eval "${MATRIX_EVAL}"
 before_script:
