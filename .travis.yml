@@ -230,7 +230,7 @@ script:
   - if [[ "$CC" =~ ^clang ]]; then unset CC; fi
   - if [[ "$CPP" =~ ^clang ]]; then unset CPP; fi
   - if [[ "$CXX" =~ ^clang ]]; then unset CXX; fi
-  - (for ((i = 0; i < 60; ++i)); do sleep 60 ; date ; done) & LOOP_PID=$! ; disown
+  - (for ((i = 0; i < 60; ++i)); do sleep 60 ; printf "%s (%s )\n" "`date`" "`uptime`" ; done) & LOOP_PID=$! ; disown
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
   - M_CFLAGS="$FLAGS" M_CPPFLAGS="$FLAGS" M_CXXFLAGS="$FLAGS" dev/scripts/builders/build.lib.sh build
