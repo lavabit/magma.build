@@ -100,6 +100,10 @@ matrix:
       compiler: gcc
       env: MATRIX_EVAL="COMPILER=gcc CC=gcc CXX=g++ TARGET=magmad.check"
     - os: linux
+      dist: xenial
+      compiler: gcc
+      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 TARGET=magmad.check"
+    - os: linux
       dist: trusty
       compiler: gcc
       env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
@@ -134,10 +138,6 @@ matrix:
     - os: linux
       dist: trusty
       compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
       env: MATRIX_EVAL="COMPILER=gcc-4.9 CC=gcc-4.9 CXX=g++-4.9 TARGET=magmad.check"
     - os: linux
       dist: trusty
@@ -151,6 +151,10 @@ matrix:
       dist: trusty
       compiler: gcc
       env: MATRIX_EVAL="COMPILER=gcc-7 CC=gcc-7 CXX=g++-7 TARGET=magmad.check"
+    - os: linux
+      dist: trusty
+      compiler: gcc
+      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
     - os: linux
       dist: trusty
       compiler: gcc
@@ -182,35 +186,35 @@ matrix:
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
     - os: linux
       dist: trusty
       compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 CC=clang-6.0 CXX=clang++-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
+      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
 before_install:
   - eval "${MATRIX_EVAL}"
 before_script:
@@ -231,6 +235,9 @@ script:
   - git checkout $HASH -- .travis.yml
   - sudo -E $HOME/bin/prlimit --pid "$$" --stack=unlimited:unlimited;
   - sudo -E $HOME/bin/prlimit --pid "$$" --memlock=unlimited:unlimited;
+  - if [[ "$CC" =~ ^clang ]]; then unset CC; fi
+  - if [[ "$CPP" =~ ^clang ]]; then unset CPP; fi
+  - if [[ "$CXX" =~ ^clang ]]; then unset CXX; fi
   - (for ((i = 0; i < 60; ++i)); do sleep 60 ; date ; done) & LOOP_PID=$! ; disown
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
