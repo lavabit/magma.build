@@ -234,12 +234,13 @@ script:
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
   - M_CFLAGS="$FLAGS" M_CPPFLAGS="$FLAGS" M_CXXFLAGS="$FLAGS" dev/scripts/builders/build.lib.sh build
-  - (dev/scripts/freshen/freshen.clamav.sh &> /dev/null) &
+  - # (dev/scripts/freshen/freshen.clamav.sh &> /dev/null) &
   - dev/scripts/builders/build.lib.sh combine
   - if [ ! -f magmad.so ]; then exit 1; fi
   - dev/scripts/builders/build.lib.sh load
   - dev/scripts/database/schema.reset.sh
   - kill $LOOP_PID
+  - # sed -i -e "s/virus.available = false/virus.available = true/g" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.iface.database.socket_path/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.iface.database.host/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.library.file/d" sandbox/etc/magma.sandbox.config
