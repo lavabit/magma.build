@@ -11,6 +11,8 @@ services:
   - mysql
   - postfix
   - memcached
+cache:
+  apt: true
 addons:
   apt:
     config:
