@@ -12,7 +12,8 @@ services:
   - postfix
   - memcached
 cache:
-  apt: true
+  - directories:
+    - /var/cache/apt/archives/
 addons:
   apt:
     config:
@@ -25,13 +26,10 @@ addons:
       - automake
       - bison
       - build-essential
-      - cmake
       - curl
       - flex
       - gdb
       - git
-      - git-man
-      - gnupg
       - ibc++-dev
       - inotify-tools
       - libarchive13
@@ -44,16 +42,10 @@ addons:
       - libsubunit0
       - libsubunit-dev
       - libtool
-      - lsof
-      - make
-      - mlocate
       - patch
-      - pciutils
       - pkg-config
       - postfix
-      - rsync
       - sysstat
-      - usbutils
       - valgrind
       - valgrind-dbg
       - wget
