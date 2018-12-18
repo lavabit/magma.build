@@ -133,8 +133,8 @@ before_install:
 before_script:
   - sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
   - curl -sSL "https://build.travis-ci.org/files/gpg/llvm-toolchain-`lsb_release -c -s`-6.0.asc" | sudo -E apt-key add -
-  - echo "deb http://apt.llvm.org/`lsb_release -c -s`/ llvm-toolchain-`lsb_release -c -s`-6.0 main" | sudo tee -a ${TRAVIS_ROOT}/etc/apt/sources.list >/dev/null
-  - sudo sed -i "s/http:\/\//https:\/\//g" /etc/apt/sources.list   
+  - echo "deb https://apt.llvm.org/`lsb_release -c -s`/ llvm-toolchain-`lsb_release -c -s`-6.0 main" | sudo tee -a ${TRAVIS_ROOT}/etc/apt/sources.list >/dev/null
+  - sudo sed -i "s/http:\/\/ppa.launchpad.net/https:\/\/ppa.launchpad.net/g" /etc/apt/sources.list   
   - sudo apt-get update &
   - export HOSTNAME=`hostname`
   - mysql -e "CREATE DATABASE Sandbox;"
