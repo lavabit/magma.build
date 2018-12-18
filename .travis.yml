@@ -138,6 +138,7 @@ matrix:
 before_install:
   - eval "${MATRIX_EVAL}"
 before_script:
+  - sudo sed -i -f "s/http:\/\//https:\/\//g" ${TRAVIS_ROOT}/etc/apt/sources.list   
   - sudo apt-get update &
   - export HOSTNAME=`hostname`
   - mysql -e "CREATE DATABASE Sandbox;"
