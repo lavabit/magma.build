@@ -7,10 +7,6 @@ notifications:
       - make@magmadaemon.com
     on_success: change
     on_failure: change
-services:
-  - mysql
-  - postfix
-  - memcached
 cache:
   - directories:
     - $TRAVIS_BUILD_DIR/packages/
@@ -134,7 +130,7 @@ before_install:
   - curl -sSL "https://build.travis-ci.org/files/gpg/llvm-toolchain-`lsb_release -c -s`-6.0.asc" | sudo -E apt-key add -
   - echo "deb https://apt.llvm.org/`lsb_release -c -s`/ llvm-toolchain-`lsb_release -c -s`-6.0 main" | sudo tee -a ${TRAVIS_ROOT}/etc/apt/sources.list >/dev/null
   - #sudo sed -i "s/http:\/\/ppa.launchpad.net\/ubuntu-toolchain-r\/test\/ubuntu/https:\/\/mirror.math.princeton.edu\/pub\/ubuntu/g" /etc/apt/sources.list.d/ubuntu-toolchain-r-test-`lsb_release -c -s`.list
-  - sudo sed -i "s/http:\/\/ppa.launchpad.net\/ubuntu-toolchain-r\/test\/ubuntu/http:\/\/mirror.cs.uchicago.edu\/ubuntu-toolchain-r/g" /etc/apt/sources.list.d/ubuntu-toolchain-r-test-`lsb_release -c -s`.list
+  - #sudo sed -i "s/http:\/\/ppa.launchpad.net\/ubuntu-toolchain-r\/test\/ubuntu/http:\/\/mirror.cs.uchicago.edu\/ubuntu-toolchain-r/g" /etc/apt/sources.list.d/ubuntu-toolchain-r-test-`lsb_release -c -s`.list
   - if [ -d $TRAVIS_BUILD_DIR/packages ]; then find $TRAVIS_BUILD_DIR/packages -type f -maxdepth 1 -name "*.deb" -exec sudo cp {} /var/cache/apt/archives/ \; ; fi
   - if [ ! -d $TRAVIS_BUILD_DIR/packages ]; then mkdir $TRAVIS_BUILD_DIR/packages; fi
 install:
@@ -148,6 +144,9 @@ install:
   - ping -c 4 apt.llvm.org
 before_script:
   - export HOSTNAME=`hostname`
+  - service mysql start
+  - service postfix start
+  - service memcached start
   - mysql -e "CREATE DATABASE Sandbox;"
   - mysql -e "CREATE USER 'mytool'@'localhost' IDENTIFIED BY 'aComplex1';"
   - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'mytool'@'localhost' WITH GRANT OPTION;"
