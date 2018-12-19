@@ -140,13 +140,8 @@ install:
   - ./configure ADJTIME_PATH=/var/lib/hwclock/adjtime --disable-chfn-chsh --disable-login --disable-nologin --disable-su --disable-setpriv --disable-runuser --disable-pylibmount --disable-static --without-python --without-systemd --without-systemdsystemunitdir --without-ncurses
   - make prlimit && install --verbose --directory $HOME/bin/ && install --verbose --mode=755 prlimit $HOME/bin/prlimit && cd $TRAVIS_BUILD_DIR
   - wait && sudo -E apt-get -yq --no-install-suggests --no-install-recommends install autoconf automake bison build-essential cmake curl flex gdb git gnupg ibc++-dev inotify-tools libarchive13 libbsd-dev libc6-dev libmpfr4 libmpfr-dev libncurses5-dev libpython2.7 libsubunit0 libsubunit-dev libtool make patch pciutils pkg-config postfix sysstat usbutils valgrind valgrind-dbg gcc-4.8 g++-4.8 gcc-4.8-locales gcc-4.8-multilib g++-4.8-multilib libstdc++-4.8-dev gcc-4.9 g++-4.9 gcc-4.9-locales gcc-4.9-multilib g++-4.9-multilib libstdc++-4.9-dev gcc-5 g++-5 gcc-5-locales gcc-5-multilib g++-5-multilib libstdc++-5-dev gcc-6 g++-6 gcc-6-locales gcc-6-multilib g++-6-multilib libstdc++-6-dev gcc-7 g++-7 gcc-7-locales gcc-7-multilib g++-7-multilib libstdc++-7-dev gcc-8 g++-8 gcc-8-locales gcc-8-multilib g++-8-multilib libstdc++-8-dev clang-6.0 llvm-6.0-dev
-  - ping -c 4 ppa.launchpad.net
-  - ping -c 4 apt.llvm.org
 before_script:
   - export HOSTNAME=`hostname`
-  - sudo service mysql start
-  - sudo service postfix start
-  - sudo service memcached start
   - mysql -e "CREATE DATABASE Sandbox;"
   - mysql -e "CREATE USER 'mytool'@'localhost' IDENTIFIED BY 'aComplex1';"
   - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'mytool'@'localhost' WITH GRANT OPTION;"
