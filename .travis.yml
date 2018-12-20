@@ -12,15 +12,17 @@ cache:
     - $TRAVIS_BUILD_DIR/packages/
 matrix:
   include:
-    - os: linux
+    - stage: cache
+      os: linux
       dist: trusty
       compiler: gcc
       env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
-      jobs:
-        - stage: cache
-          script: false
-        - stage: run
-          script: true
+      script: true
+    - stage: run
+      os: linux
+      dist: trusty
+      compiler: gcc
+      env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
     - os: linux
       dist: trusty
       compiler: gcc
