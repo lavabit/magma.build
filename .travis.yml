@@ -403,5 +403,5 @@ script:
   - chmod 700 sandbox/etc/dkim.localhost.localdomain.pem
   - chmod 700 sandbox/etc/dime.localhost.localdomain.key
   - chmod 700 sandbox/etc/dime.localhost.localdomain.signet
-  - mkdir /tmp/spool/ && chmod 766/tmp/spool/
+  - mkdir /tmp/spool/ && chmod 766 /tmp/spool/
   - CC="$COMPILER" CFLAGS="$FLAGS" make --keep-going --jobs=4 $TARGET && dev/scripts/launch/check.run.sh
