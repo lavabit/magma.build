@@ -9,150 +9,365 @@ notifications:
     on_failure: change
 cache:
   - directories:
-    - $TRAVIS_BUILD_DIR/packages/
+    - $HOME/packages/
 matrix:
   include:
-    - stage: cache
-      os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
-      script: true
-    - stage: run
-      os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O1' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O2' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O3' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O0' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O1' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O2' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O3' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-4.9 CC=gcc-4.9 CXX=g++-4.9 TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-5 CC=gcc-5 CXX=g++-5 TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-6 CC=gcc-6 CXX=g++-6 TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-7 CC=gcc-7 CXX=g++-7 TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O1' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O2' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O3' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O0' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O1' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O2' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: gcc
-      env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O3' TARGET=magmad.check"
-    - os: linux
-      dist: trusty
-      compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
-    - os: linux
-      dist: trusty
-      compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
-    - os: linux
-      dist: trusty
-      compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
-    - os: linux
-      dist: trusty
-      compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
-    - os: linux
-      dist: trusty
-      compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
-    - os: linux
-      dist: trusty
-      compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
-    - os: linux
-      dist: trusty
-      compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
-    - os: linux
-      dist: trusty
-      compiler: clang
-      env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O1' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O2' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O3' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O0' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O1' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O2' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O3' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-4.9 CC=gcc-4.9 CXX=g++-4.9 TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-5 CC=gcc-5 CXX=g++-5 TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-6 CC=gcc-6 CXX=g++-6 TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-7 CC=gcc-7 CXX=g++-7 TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O1' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O2' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O3' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O0' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O1' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O2' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: gcc
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O3' TARGET=magmad.check"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: clang
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: clang
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: clang
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: clang
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: clang
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: clang
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: clang
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
+  - stage: cache
+    os: linux
+    dist: trusty
+    compiler: clang
+    script: true
+    before_script: true
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O1' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O2' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-DMAGMA_PEDANTIC -O3' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O0' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O1' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O2' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-4.8 CC=gcc-4.8 CXX=g++-4.8 FLAGS='-UMAGMA_PEDANTIC -O3' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-4.9 CC=gcc-4.9 CXX=g++-4.9 TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-5 CC=gcc-5 CXX=g++-5 TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-6 CC=gcc-6 CXX=g++-6 TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-7 CC=gcc-7 CXX=g++-7 TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O0' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O1' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O2' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-DMAGMA_PEDANTIC -O3' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O0' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O1' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O2' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env: MATRIX_EVAL="COMPILER=gcc-8 CC=gcc-8 CXX=g++-8 FLAGS='-UMAGMA_PEDANTIC -O3' TARGET=magmad.check"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: clang
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: clang
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: clang
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: clang
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -DMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: clang
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O0' TARGET='magmad.check'"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: clang
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O1' TARGET='magmad.check'"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: clang
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O2' TARGET='magmad.check'"
+  - stage: run
+    os: linux
+    dist: trusty
+    compiler: clang
+    env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
 before_install:
   - eval "${MATRIX_EVAL}"
   - sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
   - curl -sSL "https://build.travis-ci.org/files/gpg/llvm-toolchain-`lsb_release -c -s`-6.0.asc" | sudo -E apt-key add -
   - echo "deb https://apt.llvm.org/`lsb_release -c -s`/ llvm-toolchain-`lsb_release -c -s`-6.0 main" | sudo tee -a ${TRAVIS_ROOT}/etc/apt/sources.list >/dev/null
-  - #sudo sed -i "s/http:\/\/ppa.launchpad.net\/ubuntu-toolchain-r\/test\/ubuntu/https:\/\/mirror.math.princeton.edu\/pub\/ubuntu/g" /etc/apt/sources.list.d/ubuntu-toolchain-r-test-`lsb_release -c -s`.list
-  - #sudo sed -i "s/http:\/\/ppa.launchpad.net\/ubuntu-toolchain-r\/test\/ubuntu/http:\/\/mirror.cs.uchicago.edu\/ubuntu-toolchain-r/g" /etc/apt/sources.list.d/ubuntu-toolchain-r-test-`lsb_release -c -s`.list
-  - if [ -d $TRAVIS_BUILD_DIR/packages ]; then find $TRAVIS_BUILD_DIR/packages -type f -maxdepth 1 -name "*.deb" -exec sudo cp {} /var/cache/apt/archives/ \; ; fi
-  - if [ ! -d $TRAVIS_BUILD_DIR/packages ]; then mkdir $TRAVIS_BUILD_DIR/packages; fi
+  - if [ -d $HOME/packages ]; then find $HOME/packages -type f -maxdepth 1 -name "*.deb" -exec sudo cp {} /var/cache/apt/archives/ \; ; fi
+  - if [ ! -d $HOME/packages ]; then mkdir $HOME/packages; fi
 install:
   - sudo apt-get update
   - sudo -E apt-get -yq --no-install-suggests --no-install-recommends install autoconf automake bison build-essential cmake curl flex gdb git gnupg ibc++-dev inotify-tools libarchive13 libbsd-dev libc6-dev libmpfr4 libmpfr-dev libncurses5-dev libpython2.7 libsubunit0 libsubunit-dev libtool make patch pciutils pkg-config postfix sysstat usbutils valgrind valgrind-dbg gcc-4.8 g++-4.8 gcc-4.8-locales gcc-4.8-multilib g++-4.8-multilib libstdc++-4.8-dev gcc-4.9 g++-4.9 gcc-4.9-locales gcc-4.9-multilib g++-4.9-multilib libstdc++-4.9-dev gcc-5 g++-5 gcc-5-locales gcc-5-multilib g++-5-multilib libstdc++-5-dev gcc-6 g++-6 gcc-6-locales gcc-6-multilib g++-6-multilib libstdc++-6-dev gcc-7 g++-7 gcc-7-locales gcc-7-multilib g++-7-multilib libstdc++-7-dev gcc-8 g++-8 gcc-8-locales gcc-8-multilib g++-8-multilib libstdc++-8-dev clang-6.0 llvm-6.0-dev
-  - cd $HOME && curl --location --output util-linux-2.25.2.tar.gz https://www.kernel.org/pub/linux/utils/util-linux/v2.25/util-linux-2.25.2.tar.gz
-  - tar xzf util-linux-2.25.2.tar.gz && cd util-linux-2.25.2
-  - ./configure ADJTIME_PATH=/var/lib/hwclock/adjtime --disable-chfn-chsh --disable-login --disable-nologin --disable-su --disable-setpriv --disable-runuser --disable-pylibmount --disable-static --without-python --without-systemd --without-systemdsystemunitdir --without-ncurses
-  - make prlimit && install --verbose --directory $HOME/bin/ && install --verbose --mode=755 prlimit $HOME/bin/prlimit && cd $TRAVIS_BUILD_DIR
+  - (find /var/cache/apt/archives/ -type f -maxdepth 1 -name "*.deb" -exec cp {} $HOME/packages/ \;) &
 before_script:
   - export HOSTNAME=`hostname`
   - mysql -e "CREATE DATABASE Sandbox;"
   - mysql -e "CREATE USER 'mytool'@'localhost' IDENTIFIED BY 'aComplex1';"
   - mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'mytool'@'localhost' WITH GRANT OPTION;"
-  - (find /var/cache/apt/archives/ -type f -maxdepth 1 -name "*.deb" -exec cp {} $TRAVIS_BUILD_DIR/packages/ \;) &
+  - cd $HOME && curl --location --output util-linux-2.25.2.tar.gz https://www.kernel.org/pub/linux/utils/util-linux/v2.25/util-linux-2.25.2.tar.gz
+  - tar xzf util-linux-2.25.2.tar.gz && cd util-linux-2.25.2
+  - ./configure ADJTIME_PATH=/var/lib/hwclock/adjtime --disable-chfn-chsh --disable-login --disable-nologin --disable-su --disable-setpriv --disable-runuser --disable-pylibmount --disable-static --without-python --without-systemd --without-systemdsystemunitdir --without-ncurses
+  - make prlimit && install --verbose --directory $HOME/bin/ && install --verbose --mode=755 prlimit $HOME/bin/prlimit && cd $TRAVIS_BUILD_DIR
 script:
   - export HOSTNAME=`hostname`
   - export HASH=`git show  --quiet | grep commit | awk -F' ' '{print $2}'`
@@ -169,13 +384,13 @@ script:
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
   - M_CFLAGS="$FLAGS" M_CPPFLAGS="$FLAGS" M_CXXFLAGS="$FLAGS" dev/scripts/builders/build.lib.sh build
-  - # (dev/scripts/freshen/freshen.clamav.sh &> /dev/null) &
+  - (dev/scripts/freshen/freshen.clamav.sh &> /dev/null) &
   - dev/scripts/builders/build.lib.sh combine
   - if [ ! -f magmad.so ]; then exit 1; fi
   - dev/scripts/builders/build.lib.sh load
   - dev/scripts/database/schema.reset.sh
   - kill $LOOP_PID
-  - # sed -i -e "s/virus.available = false/virus.available = true/g" sandbox/etc/magma.sandbox.config
+  - sed -i -e "s/virus.available = false/virus.available = true/g" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.iface.database.socket_path/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.iface.database.host/d" sandbox/etc/magma.sandbox.config
   - sed -i -e "/magma.library.file/d" sandbox/etc/magma.sandbox.config
