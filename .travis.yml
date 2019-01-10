@@ -375,6 +375,10 @@ script:
   - git fetch upstream
   - git reset --hard upstream/develop
   - git checkout $HASH -- .travis.yml
+  - sudo sysctl -a 2>&1 | sort
+  - free -m
+  - sudo renice -n -19 $$
+  - sudo sysctl -w vm.swappiness=1
   - sudo -E $HOME/bin/prlimit --pid "$$" --stack=unlimited:unlimited;
   - sudo -E $HOME/bin/prlimit --pid "$$" --memlock=unlimited:unlimited;
   - if [[ "$CC" =~ ^clang ]]; then unset CC; fi
