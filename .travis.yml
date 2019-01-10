@@ -375,12 +375,11 @@ script:
   - git fetch upstream
   - git reset --hard upstream/develop
   - git checkout $HASH -- .travis.yml
-  - sudo sysctl -a 2>&1 | sort
-  - free -m
   - sudo renice -n -19 $$
-  - sudo sysctl -w vm.swappiness=1
+  - sudo sysctl --quiet --write vm.swappiness=1
   - sudo -E $HOME/bin/prlimit --pid "$$" --stack=unlimited:unlimited;
   - sudo -E $HOME/bin/prlimit --pid "$$" --memlock=unlimited:unlimited;
+  - sudo killall -9 atd ; sudo killall -9 cron ; sudo killall -9 acpid 
   - if [[ "$CC" =~ ^clang ]]; then unset CC; fi
   - if [[ "$CPP" =~ ^clang ]]; then unset CPP; fi
   - if [[ "$CXX" =~ ^clang ]]; then unset CXX; fi
