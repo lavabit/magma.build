@@ -375,7 +375,7 @@ script:
   - git fetch upstream
   - git reset --hard upstream/develop
   - git checkout $HASH -- .travis.yml
-  - sudo renice -n -19 $$
+  - sudo renice --priority -19 $$
   - sudo sysctl --quiet --write vm.swappiness=1
   - sudo -E $HOME/bin/prlimit --pid "$$" --stack=unlimited:unlimited;
   - sudo -E $HOME/bin/prlimit --pid "$$" --memlock=unlimited:unlimited;
