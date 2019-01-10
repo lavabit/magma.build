@@ -350,7 +350,14 @@ matrix:
     env: MATRIX_EVAL="COMPILER=clang-6.0 FLAGS='-Wno-address-of-packed-member -UMAGMA_PEDANTIC -O3' TARGET='magmad.check'"
 before_install:
   - eval "${MATRIX_EVAL}"
+  - printf 'Acquire::Retries "10";\n' | sudo tee --append /etc/apt/apt.conf.d/99custom
+  - printf 'Acquire::http::Timeout "120";\n' | sudo tee --append /etc/apt/apt.conf.d/99custom
+  - printf 'Acquire::https::Timeout "120";\n' | sudo tee --append /etc/apt/apt.conf.d/99custom
+  - printf 'Acquire::http::No-Cache "true";\n' | sudo tee --append /etc/apt/apt.conf.d/99custom
+  - printf 'Acquire::https::No-Cache "true";\n' | sudo tee --append /etc/apt/apt.conf.d/99custom
   - sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
+  - sudo -E apt-add-repository --remove "deb https://packagecloud.io/github/git-lfs/ubuntu `lsb_release -c -s` main" || echo "LFS repo absent."
+  - sudo -E sed -i -e "s/http:\/\/repo.mongodb.org/https:\/\/repo.mongodb.org/g" /etc/apt/sources.list
   - curl -sSL "https://build.travis-ci.org/files/gpg/llvm-toolchain-`lsb_release -c -s`-6.0.asc" | sudo -E apt-key add -
   - echo "deb https://apt.llvm.org/`lsb_release -c -s`/ llvm-toolchain-`lsb_release -c -s`-6.0 main" | sudo tee -a ${TRAVIS_ROOT}/etc/apt/sources.list >/dev/null
   - if [ -d $HOME/packages ]; then find $HOME/packages -type f -maxdepth 1 -name "*.deb" -exec sudo cp {} /var/cache/apt/archives/ \; ; fi
