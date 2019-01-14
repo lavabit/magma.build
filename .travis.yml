@@ -357,14 +357,17 @@ install:
   - printf 'Acquire::http::No-Cache "true";\n' | sudo tee --append /etc/apt/apt.conf.d/99custom
   - printf 'Acquire::https::No-Cache "true";\n' | sudo tee --append /etc/apt/apt.conf.d/99custom
   - sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
-  - sudo -E apt-add-repository --remove "deb https://packagecloud.io/github/git-lfs/ubuntu `lsb_release -c -s` main" || echo "LFS repo absent."
-  - sudo -E sed -i -e "s/http:\/\/repo.mongodb.org/https:\/\/repo.mongodb.org/g" /etc/apt/sources.list
+  - #sudo -E apt-add-repository --remove "deb https://packagecloud.io/github/git-lfs/ubuntu `lsb_release -c -s` main" || echo "LFS repo absent."
+  - sudo -E sed -i -e '/repo.mongodb.org/d' /etc/apt/sources.list
+  - sudo -E sed -i -e '/ppa.launchpad.net\/couchdb' /etc/apt/sources.list
+  - sudo -E sed -i -e '/packagecloud.io\/github\/git-lfs/d' /etc/apt/sources.list
+  - #sudo -E sed -i -e "s/http:\/\/repo.mongodb.org/https:\/\/repo.mongodb.org/g" /etc/apt/sources.list
   - curl -sSL "https://build.travis-ci.org/files/gpg/llvm-toolchain-`lsb_release -c -s`-6.0.asc" | sudo -E apt-key add -
   - echo "deb https://apt.llvm.org/`lsb_release -c -s`/ llvm-toolchain-`lsb_release -c -s`-6.0 main" | sudo tee -a ${TRAVIS_ROOT}/etc/apt/sources.list >/dev/null
   - if [ -d $HOME/packages ]; then find $HOME/packages -type f -maxdepth 1 -name "*.deb" -exec sudo cp {} /var/cache/apt/archives/ \; ; fi
   - if [ ! -d $HOME/packages ]; then mkdir $HOME/packages; fi
   - (travis_retry sudo apt-get update && travis_retry sudo -E apt-get -yq --no-install-suggests --no-install-recommends install autoconf automake bison build-essential cmake curl flex gdb git gnupg ibc++-dev inotify-tools libarchive13 libbsd-dev libc6-dev libmpfr4 libmpfr-dev libncurses5-dev libpython2.7 libsubunit0 libsubunit-dev libtool make patch pciutils pkg-config postfix sysstat usbutils valgrind valgrind-dbg gcc-4.8 g++-4.8 gcc-4.8-locales gcc-4.8-multilib g++-4.8-multilib libstdc++-4.8-dev gcc-4.9 g++-4.9 gcc-4.9-locales gcc-4.9-multilib g++-4.9-multilib libstdc++-4.9-dev gcc-5 g++-5 gcc-5-locales gcc-5-multilib g++-5-multilib libstdc++-5-dev gcc-6 g++-6 gcc-6-locales gcc-6-multilib g++-6-multilib libstdc++-6-dev gcc-7 g++-7 gcc-7-locales gcc-7-multilib g++-7-multilib libstdc++-7-dev gcc-8 g++-8 gcc-8-locales gcc-8-multilib g++-8-multilib libstdc++-8-dev clang-6.0 llvm-6.0-dev) || (sleep 120; travis_retry sudo apt-get update && travis_retry sudo -E apt-get -yq --no-install-suggests --no-install-recommends install autoconf automake bison build-essential cmake curl flex gdb git gnupg ibc++-dev inotify-tools libarchive13 libbsd-dev libc6-dev libmpfr4 libmpfr-dev libncurses5-dev libpython2.7 libsubunit0 libsubunit-dev libtool make patch pciutils pkg-config postfix sysstat usbutils valgrind valgrind-dbg gcc-4.8 g++-4.8 gcc-4.8-locales gcc-4.8-multilib g++-4.8-multilib libstdc++-4.8-dev gcc-4.9 g++-4.9 gcc-4.9-locales gcc-4.9-multilib g++-4.9-multilib libstdc++-4.9-dev gcc-5 g++-5 gcc-5-locales gcc-5-multilib g++-5-multilib libstdc++-5-dev gcc-6 g++-6 gcc-6-locales gcc-6-multilib g++-6-multilib libstdc++-6-dev gcc-7 g++-7 gcc-7-locales gcc-7-multilib g++-7-multilib libstdc++-7-dev gcc-8 g++-8 gcc-8-locales gcc-8-multilib g++-8-multilib libstdc++-8-dev clang-6.0 llvm-6.0-dev)
-  - (find /var/cache/apt/archives/ -type f -maxdepth 1 -name "*.deb" -exec cp {} $HOME/packages/ \;) &
+  - (find /var/cache/apt/archives/ -type f -maxdepth 1 -name "*.deb" -exec cp {} $HOME/packages/ \;)
 before_script:
   - export HOSTNAME=`hostname`
   - mysql -e "CREATE DATABASE Sandbox;"
@@ -381,7 +384,7 @@ script:
   - git fetch upstream
   - git reset --hard upstream/develop
   - git checkout $HASH -- .travis.yml
-  - sudo renice --priority -19 $$
+  - sudo renice --priority -10 $$
   - sudo sysctl --quiet --write vm.swappiness=5
   - sudo -E $HOME/bin/prlimit --pid "$$" --stack=unlimited:unlimited;
   - sudo -E $HOME/bin/prlimit --pid "$$" --memlock=unlimited:unlimited;
