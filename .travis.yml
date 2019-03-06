@@ -382,7 +382,7 @@ script:
   - export HOSTNAME=`hostname`
   - export HASH=`git show  --quiet | grep commit | awk -F' ' '{print $2}'`
   - git remote add upstream https://github.com/lavabit/magma.git
-  - git fetch upstream
+  - GIT_HTTP_MAX_REQUESTS=128 git fetch upstream
   - git reset --hard upstream/develop
   - git checkout $HASH -- .travis.yml
   - sudo renice --priority -10 $$
