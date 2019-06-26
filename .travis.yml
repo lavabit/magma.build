@@ -5,8 +5,8 @@ notifications:
   email:
     recipients:
       - make@magmadaemon.com
-    on_success: change
-    on_failure: change
+    on_success: never
+    on_failure: always
 cache:
   - directories:
     - $HOME/packages/
