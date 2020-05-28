@@ -689,7 +689,7 @@ before_install:
   - eval "${MATRIX_EVAL}"
 install:
   - export HOSTNAME=`hostname`
-  - sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
+  - travis_retry sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test"
   - printf 'Acquire::Retries "10";\n' | sudo tee --append /etc/apt/apt.conf.d/99custom
   - printf 'Acquire::BrokenProxy "true";\n' | sudo tee --append /etc/apt/apt.conf.d/99custom
   - printf 'Acquire::http::Timeout "120";\n' | sudo tee --append /etc/apt/apt.conf.d/99custom
