@@ -747,7 +747,7 @@ script:
   - dev/scripts/builders/build.lib.sh extract
   - dev/scripts/builders/build.lib.sh prep
   - M_CFLAGS="$FLAGS" M_CPPFLAGS="$FLAGS" M_CXXFLAGS="$FLAGS" dev/scripts/builders/build.lib.sh build
-  - (dev/scripts/freshen/freshen.clamav.sh &> /dev/null) &
+  - (dev/scripts/freshen/freshen.clamav.sh &> /dev/null ; sleep 10 ; dev/scripts/freshen/freshen.clamav.sh &> /dev/null ; sleep 10 ; dev/scripts/freshen/freshen.clamav.sh &> /dev/null) &
   - dev/scripts/builders/build.lib.sh combine
   - if [ ! -f magmad.so ]; then exit 1; fi
   - dev/scripts/builders/build.lib.sh load
